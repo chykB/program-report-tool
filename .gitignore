@@ -1,0 +1,56 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# ========================
+# Virtual environments
+# ========================
+venv/
+.env
+.env.*
+.venv/
+
+# ========================
+# Django
+# ========================
+db.sqlite3
+media/
+staticfiles/
+*.log
+
+# ========================
+# Data & uploads
+# ========================
+uploads/
+data/
+*.csv
+*.xlsx
+
+# ========================
+# Generated reports
+# ========================
+reports_output/
+*.pptx
+*.pdf
+*.mp4
+
+# ========================
+# IDE / OS
+# ========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ========================
+# WSL / Linux
+# ========================
+*.swp
