@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Dataset, DatasetColumn, DataRow
+from .models import Dataset, DatasetColumn, DataRow, Insight
 
 @admin.register(Dataset)
 class DatasetAdmin(admin.ModelAdmin):
@@ -15,3 +15,6 @@ class DataRowAdmin(admin.ModelAdmin):
     list_display = ("id", "dataset")
     readonly_fields = ("row_data",)
 
+@admin.register(Insight)
+class InsightAdmin(admin.ModelAdmin):
+    list_display = ("id", "dataset", "insight_type", "created_at")

@@ -25,3 +25,19 @@ class DatasetColumn(models.Model):
 class DataRow(models.Model):
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
     row_data = models.JSONField()
+
+class Insight(models.Model):
+    INSIGHT_TYPES = (
+        ("nps", "NPS"),
+        ("csat", "CSAT"),
+        ("distribution", "Distribution"),
+        ("summary", "Summary"),
+    )
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
+    insight_type = models.CharField(max_length=30, choices=INSIGHT_TYPES)
+    dimension =models.CharField(max_length=100, null=True, blank=True)
+    value = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.dataset} - {self.insight_type}"
