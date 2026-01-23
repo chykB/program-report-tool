@@ -1,4 +1,5 @@
 import io
+import hashlib
 import pandas as pd
 from ..models import Dataset, DatasetColumn, DataRow
 
@@ -13,6 +14,14 @@ def ingest_csv(file, cohort, dataset_type):
     allowed_types = [choice[0] for choice in Dataset.DATASET_TYPE]
     if dataset_type not in allowed_types:
         raise ValueError(f"Invalid dataset_type: {dataset_type}. Must be one of the allowed types")
+    
+    file_bytes = file.read()
+    file_hash = hashlib.md5(file_bytes).hexdigest()
+    file.seek(0)
+
+    if Dataset.objects.filter(file_hash=file_hash).exists():
+        return {"error": "This file has already been uploaded"}
+
     text_file = io.TextIOWrapper(file.file, encoding="utf-8-sig")
     df = pd.read_csv(
         text_file,
@@ -26,7 +35,8 @@ def ingest_csv(file, cohort, dataset_type):
     dataset = Dataset.objects.create(
         cohort=cohort,
         dataset_type=dataset_type,
-        source="csv"
+        source="csv",
+        file_hash=file_hash
     )
 
     for col in df.columns:

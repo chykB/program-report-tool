@@ -9,6 +9,7 @@ class Dataset(models.Model):
     cohort = models.ForeignKey(Cohort, on_delete=models.CASCADE)
     dataset_type = models.CharField(max_length=30, choices=DATASET_TYPE)
     source = models.CharField(max_length=30, default="csv")
+    file_hash = models.CharField(max_length=64, null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -18,7 +19,7 @@ class Dataset(models.Model):
 class DatasetColumn(models.Model):
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
     raw_name = models.CharField(max_length=255)
-    semantic_type = models.CharField(max_length=50, null=True, blank=True)
+    semantic_type = models.CharField(max_length=50, unique=True, null=True, blank=True)
     confidence = models.FloatField(default=0.0)
 
 class DataRow(models.Model):
