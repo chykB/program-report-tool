@@ -28,6 +28,9 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY is not set in the environment variables")
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') =='True'
 
