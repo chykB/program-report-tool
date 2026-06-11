@@ -8,12 +8,19 @@ def apply_semantic_detection(dataset: Dataset):
     columns = DatasetColumn.objects.filter(dataset=dataset)
     updated = 0
     for column in columns:
-        semantic, confidence = infer_semantic_type(column.raw_name)
+        semantic, confidence = infer_semantic_type(
+            column.raw_name, 
+            column.dataset.dataset_type
+            )
         column.semantic_type = semantic
         column.confidence = confidence
-        column.save(update_fields=["semantic_type", "confidence"])
+        column.save(
+            update_fields=[
+                "semantic_type", 
+                "confidence"
+                ])
         updated += 1
-        return {
-            "dataset_id": dataset.id,
-            "column": updated
-        }
+    return {
+        "dataset_id": dataset.pk,
+        "column_updated": updated
+    }
